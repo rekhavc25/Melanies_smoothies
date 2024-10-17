@@ -1,7 +1,6 @@
 # Import python packages
 import streamlit as st
 from snowflake.snowpark.functions import col
-from snowflake.snowpark.context import get_active_session
 
 # Write directly to the app
 st.title(":cup_with_straw: Example Streamlit App :cup_with_straw:")
@@ -41,7 +40,9 @@ st.write(my_insert_stmt)
 
 time_to_insert = st.button('submit_order')
 
-
 if time_to_insert:
     session.sql(my_insert_stmt).collect()
     st.success('Your Smoothie is ordered!', icon="✅")
+    
+cnx = st.connection("snowflake")
+session = cnx.session()
